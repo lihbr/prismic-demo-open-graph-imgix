@@ -57,7 +57,7 @@ const Article = ({ article, latestArticles, navigation, settings }) => {
   const metaTitle = `${prismicH.asText(article.data.title)} | ${prismicH.asText(settings.data.name)}`
   const metaDescription = getExcerpt(article.data.slices)
   const metaURL = `https://open-graph-imgix.vercel.app${prismicH.asLink(article, linkResolver)}`
-  const metaImage = prismicH.asImageSrc({ url: "https://images.prismic.io/open-graph-imgix/f2476078-d0a3-43fa-8eca-6d659a43f20f_base.jpg?auto=compress,format" }, {
+  const metaImage = prismicH.asImageSrc(settings.data.baseMetaImage, {
     txt: prismicH.asText(article.data.title),
     txtSize: 60,
     txtColor: "1e293b",

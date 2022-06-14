@@ -51,6 +51,17 @@
           "allowTargetBlank": true,
           "multi": "paragraph,em,strong,hyperlink"
         }
+      },
+      "baseMetaImage": {
+        "type": "Image",
+        "config": {
+          "label": "Base Meta Image",
+          "constraint": {
+            "width": 1200,
+            "height": 630
+          },
+          "thumbnails": []
+        }
       }
     }
   }
