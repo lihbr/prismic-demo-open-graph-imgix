@@ -15,6 +15,21 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
 });
 
+const getExcerpt = (slices) => {
+  const text = slices
+    .filter((slice) => slice.slice_type === "text")
+    .map((slice) => prismicH.asText(slice.primary.text))
+    .join(" ");
+
+  const excerpt = text.substring(0, 120);
+
+  if (text.length > 120) {
+    return excerpt.substring(0, excerpt.lastIndexOf(" ")) + "…";
+  } else {
+    return excerpt;
+  }
+};
+
 const LatestArticle = ({ article }) => {
   const date = prismicH.asDate(
     article.data.publishDate || article.first_publication_date
@@ -40,6 +55,7 @@ const Article = ({ article, latestArticles, navigation, settings }) => {
   );
 
   const metaTitle = `${prismicH.asText(article.data.title)} | ${prismicH.asText(settings.data.name)}`
+  const metaDescription = getExcerpt(article.data.slices)
   const metaURL = `https://open-graph-imgix.vercel.app${prismicH.asLink(article, linkResolver)}`
   const metaImage = prismicH.asImageSrc({ url: "https://images.prismic.io/open-graph-imgix/f2476078-d0a3-43fa-8eca-6d659a43f20f_base.jpg?auto=compress,format" }, {
     txt: prismicH.asText(article.data.title),
@@ -59,6 +75,7 @@ const Article = ({ article, latestArticles, navigation, settings }) => {
       <Head>
         <title>{metaTitle}</title>
         <meta property="og:title" content={metaTitle} />
+        <meta property="og:description" content={metaDescription} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={metaURL} />
         <meta property="og:image" content={metaImage} />
